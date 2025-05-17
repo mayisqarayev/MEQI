@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>DHL Express Clone</title>
-  <!-- Font Awesome CDN -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
     :root {
@@ -15,6 +14,10 @@
       --input-border: #ddd;
       --input-focus-border: #ba0c2f;
       --button-hover: #8a081f;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
@@ -132,7 +135,7 @@
 
     .hero {
       position: relative;
-      background-image: url('images/container.png'); /* senin yüklediğin görsel */
+      background-image: url('images/container.png');
       background-size: cover;
       background-position: center;
       height: 80vh;
@@ -143,7 +146,7 @@
       width: 100%;
       height: 100%;
       background: 
-        linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), /* qaraltma */
+        linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
         url('/assets/baku.jpg');
       background-size: cover;
       background-position: center;
@@ -184,8 +187,8 @@
 
     .buttons {
       display: flex;
-      gap: 10px; /* butonlar arası boşluk */
-      flex-wrap: wrap; /* küçük ekranlarda alta geçebilmesi için */
+      gap: 10px;
+      flex-wrap: wrap;
     }
 
     .buttons button {
@@ -196,7 +199,7 @@
       border: none;
       border-radius: 5px;
       cursor: pointer;
-      white-space: nowrap; /* metinler taşmasın diye */
+      white-space: nowrap;
     }
 
     .buttons button:hover {
@@ -252,7 +255,7 @@
     .carousel-text h3 {
       font-size: 24px;
       margin: 0 0 10px;
-      color: #cc0000; /* DHL qırmızı tonu */
+      color: #cc0000;
     }
 
     .carousel-text p {
@@ -360,7 +363,6 @@
   margin: 0 20px;
 }
 
-/* Mobil uyğunluq */
 @media (max-width: 768px) {
   .mydhl-container {
     flex-direction: column;
@@ -548,9 +550,9 @@ button[type="submit"]:hover {
     </div>
 
     <nav class="nav-menu">
-      <a href="#">Create Shipment</a>
+      <a href="#createShipment">Create Shipment</a>
       <a href="#">Track</a>
-      <a href="#">Help</a>
+      <a href="#footer">Help</a>
       <select class="lang-select">
         <option>EN</option>
         <option>AZ</option>
@@ -566,11 +568,12 @@ button[type="submit"]:hover {
       <a href="#">Track</a>
     </div>
     <div class="right-menu">
-      <button><i class="fas fa-user-plus"></i> Register</button>
-      <button><i class="fas fa-sign-in-alt"></i> Login</button>
+      <button onclick="toRegister()"><i class="fas fa-user-plus"></i> Register</button>
+      <button onclick="toLogin()"><i class="fas fa-sign-in-alt"></i> Login</button>
     </div>
   </div>
-
+  
+  <!-- HERO SECTION -->
   <section class="hero">
     <div class="overlay">
       <div class="hero-content">
@@ -581,7 +584,7 @@ button[type="submit"]:hover {
         <div class="right">
           <h2>Get Started Now</h2>
           <div class="buttons">
-            <button>Create a New Shipment</button>
+            <button onclick="toCreateShipment()">Create a New Shipment</button>
             <button>Get a Rate and Time Quote</button>
             <button>Schedule a Pickup</button>
           </div>
@@ -590,7 +593,8 @@ button[type="submit"]:hover {
     </div>
   </section>
 
-  <section class="custom-carousel">
+  <!-- CAROUSEL SECTION -->
+  <section class="custom-carousel" id="carousel">
     <div class="carousel-wrapper">
       <button class="carousel-btn left">&#10094;</button>
       <div class="carousel-track">
@@ -627,6 +631,7 @@ button[type="submit"]:hover {
     </div>
   </section>
 
+  <!-- MYDHL SECTION -->
   <section class="mydhl-section">
     <div class="mydhl-container">
       <div class="mydhl-left">
@@ -638,7 +643,7 @@ button[type="submit"]:hover {
         <div class="mydhl-actions">
           <div class="mydhl-action">
             <i class="fas fa-user"></i>
-            <a href="#">Create a Login</a>
+            <a href="login.html">Create a Login</a>
           </div>
           <div class="mydhl-divider"></div>
           <div class="mydhl-action">
@@ -648,15 +653,16 @@ button[type="submit"]:hover {
           <div class="mydhl-divider"></div>
           <div class="mydhl-action">
             <i class="fas fa-check-circle"></i>
-            <a href="#">What's New</a>
+            <a href="#carousel">What's New</a>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- MAIN CONTENT -->
+  <!-- CREATE SHIPMENT -->
   <main class="site-main">
+    <div id="createShipment">
     <h1>Create New Shipment</h1>
     <form id="shipmentForm">
       <div class="form-group">
@@ -673,11 +679,12 @@ button[type="submit"]:hover {
       </div>
       <button type="submit">Continue</button>
     </form>
+    </div>
   </main>
 
 
   <!-- FOOTER -->
-  <footer class="dhl-footer">
+  <footer class="dhl-footer" id="footer">
     <div class="footer-top">
       <div class="footer-column">
         <h4>CONTACT AND SUPPORT</h4>
@@ -714,8 +721,20 @@ button[type="submit"]:hover {
     </div>
   </footer>
 
-  <!-- JAVASCRIPT -->
   <script>
+    
+    function toRegister() {
+      window.location.href = "register.html"
+    }
+
+    function toLogin() {
+      window.location.href = "login.html"
+    }
+
+    function toCreateShipment() {
+      window.location.href = "#createShipment"
+    }
+
     document.getElementById('shipmentForm').addEventListener('submit', function (e) {
       e.preventDefault();
       alert('Shipment creation continues...');
