@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DHL Express Clone</title>
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    :root {
+      --dhl-red: #ba0c2f;
+      --dhl-yellow: #ffcc00;
+      --dhl-dark: #333333;
+      --dhl-light: #f7f7f7;
+      --input-border: #ddd;
+      --input-focus-border: #ba0c2f;
+      --button-hover: #8a081f;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background-color: var(--dhl-light);
+      color: var(--dhl-dark);
+    }
+
+    .site-header {
+      background-color: var(--dhl-yellow);
+      color: var(--dhl-red);
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid white;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: var(--dhl-red);
+    }
+
+    .search-bar {
+      flex: 1;
+      max-width: 400px;
+      display: flex;
+      align-items: center;
+      margin: 10px;
+    }
+
+    .search-bar input {
+      flex: 1;
+      padding: 6px 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px 0 0 4px;
+      font-size: 14px;
+    }
+
+    .search-bar button {
+      padding: 6px 10px;
+      background-color: var(--dhl-red);
+      border: none;
+      color: white;
+      border-radius: 0 4px 4px 0;
+      cursor: pointer;
+    }
+
+    .search-bar button:hover {
+      background-color: #990926;
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .nav-menu a {
+      color: var(--dhl-red);
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .lang-select {
+      padding: 5px;
+      border-radius: 4px;
+      border: 1px solid var(--dhl-red);
+      background-color: white;
+      color: var(--dhl-dark);
+    }
+
+    .header-bottom {
+      background-color: var(--dhl-yellow);
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid #fff;
+    }
+
+    .header-bottom .left-menu,
+    .header-bottom .right-menu {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .header-bottom a {
+      text-decoration: none;
+      color: var(--dhl-red);
+      font-weight: bold;
+    }
+
+    .header-bottom button {
+      background-color: white;
+      border: 1px solid var(--dhl-red);
+      color: var(--dhl-red);
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .header-bottom button:hover {
+      background-color: var(--dhl-red);
+      color: white;
+    }
+
+    .hero {
+      position: relative;
+      background-image: url('images/container.png'); /* senin yüklediğin görsel */
+      background-size: cover;
+      background-position: center;
+      height: 80vh;
+      color: white;
+    }
+
+    .overlay {
+      width: 100%;
+      height: 100%;
+      background: 
+        linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), /* qaraltma */
+        url('/assets/baku.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-content {
+      display: flex;
+      justify-content: space-between;
+      width: 90%;
+      max-width: 1200px;
+      padding: 20px;
+      gap: 40px;
+    }
+
+    .left h1 {
+      font-size: 2.5rem;
+      font-weight: bold;
+    }
+
+    .left h1 span {
+      color: #ffcc00;
+    }
+
+    .right {
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    .right h2 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 10px; /* butonlar arası boşluk */
+      flex-wrap: wrap; /* küçük ekranlarda alta geçebilmesi için */
+    }
+
+    .buttons button {
+      padding: 10px 15px;
+      background-color: white;
+      color: black;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      white-space: nowrap; /* metinler taşmasın diye */
+    }
+
+    .buttons button:hover {
+      background-color: #ffcc00;
+      transition: 0.3s;
+    }
+
+    .custom-carousel {
+      padding: 50px 0;
+      background-color: #f7f7f7;
+    }
+
+    .carousel-wrapper {
+      position: relative;
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .carousel-track {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .carousel-item {
+      min-width: 100%;
+      position: relative;
+    }
+
+    .carousel-item img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+    }
+
+    .carousel-text {
+      position: absolute;
+      bottom: 30px;
+      left: 40px;
+      background: rgba(255, 255, 255, 0.85);
+      color: #111;
+      padding: 20px 25px;
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+      max-width: 400px;
+      backdrop-filter: blur(5px);
+      transition: all 0.3s ease;
+    }
+
+    .carousel-text h3 {
+      font-size: 24px;
+      margin: 0 0 10px;
+      color: #cc0000; /* DHL qırmızı tonu */
+    }
+
+    .carousel-text p {
+      font-size: 16px;
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(0,0,0,0.5);
+      color: white;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      padding: 10px 15px;
+      z-index: 1;
+      border-radius: 50%;
+    }
+
+    .carousel-btn:hover {
+      background-color: rgba(0, 0, 0, 0.6);
+    }
+
+    .carousel-btn.left {
+      left: 20px;
+    }
+
+    .carousel-btn.right {
+      right: 20px;
+    }
+
+    .mydhl-section {
+  background-color: #fff;
+  padding: 50px 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.mydhl-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mydhl-left img {
+  max-width: 100%;
+  height: auto;
+}
+
+.mydhl-right {
+  flex: 1;
+  padding: 20px 30px;
+}
+
+.mydhl-right h2 {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.mydhl-right p {
+  font-size: 16px;
+  margin-bottom: 25px;
+  color: #333;
+}
+
+.mydhl-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background: #f9f9f9;
+  border-radius: 12px;
+  padding: 20px 25px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+}
+
+.mydhl-action {
+  text-align: center;
+  padding: 0 20px;
+}
+
+.mydhl-action i {
+  font-size: 28px;
+  color: #444;
+  margin-bottom: 5px;
+}
+
+.mydhl-action a {
+  display: block;
+  color: #0073e6;
+  font-weight: 500;
+  text-decoration: none;
+  margin-top: 8px;
+}
+
+.mydhl-divider {
+  width: 1px;
+  height: 50px;
+  background-color: #ccc;
+  margin: 0 20px;
+}
+
+/* Mobil uyğunluq */
+@media (max-width: 768px) {
+  .mydhl-container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .mydhl-actions {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .mydhl-divider {
+    display: none;
+  }
+}
+
+    .site-main {
+  padding: 40px 30px;
+  background-color: #fff;
+  max-width: 600px;
+  margin: 40px auto;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.site-main h1 {
+  color: var(--dhl-red);
+  font-weight: 700;
+  font-size: 2.4rem;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 25px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #333;
+}
+
+input[type="text"],
+input[type="number"] {
+  width: 100%;
+  padding: 12px 15px;
+  font-size: 1rem;
+  border: 1.8px solid var(--input-border);
+  border-radius: 6px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+  outline: none;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus {
+  border-color: var(--input-focus-border);
+  box-shadow: 0 0 6px rgba(186, 12, 47, 0.4);
+}
+
+button[type="submit"] {
+  display: block;
+  width: 100%;
+  background-color: var(--dhl-red);
+  color: white;
+  border: none;
+  padding: 14px 0;
+  cursor: pointer;
+  font-size: 1.25rem;
+  font-weight: 700;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: var(--button-hover);
+}
+
+    .dhl-footer {
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      background-color: white;
+      color: #333;
+      border-top: 1px solid #ccc;
+      padding: 20px;
+    }
+
+    .footer-top {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .footer-column {
+      flex: 1;
+      min-width: 180px;
+      margin-right: 20px;
+    }
+
+    .footer-column h4 {
+      font-weight: bold;
+      font-size: 13px;
+      color: #555;
+      margin-bottom: 10px;
+    }
+
+    .footer-column a {
+      display: block;
+      text-decoration: none;
+      color: #000;
+      margin: 4px 0;
+    }
+
+    .footer-column a:hover {
+      text-decoration: underline;
+    }
+
+    .footer-logo img {
+      width: 100px;
+      margin-bottom: 10px;
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 15px;
+    }
+
+    .footer-bottom .follow {
+      font-weight: bold;
+    }
+
+    .footer-bottom .legal-links {
+      text-align: right;
+      font-size: 13px;
+    }
+
+    .footer-bottom .legal-links a {
+      margin-right: 10px;
+      text-decoration: none;
+      color: #333;
+    }
+
+    .footer-bottom .legal-links a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      .site-header {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .footer-top {
+        flex-direction: column;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .footer-bottom .legal-links {
+        margin-top: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="logo">DHL Express</div>
+
+    <div class="search-bar">
+      <input type="text" placeholder="Search..." />
+      <button><i class="fas fa-search"></i></button>
+    </div>
+
+    <nav class="nav-menu">
+      <a href="#">Create Shipment</a>
+      <a href="#">Track</a>
+      <a href="#">Help</a>
+      <select class="lang-select">
+        <option>EN</option>
+        <option>AZ</option>
+      </select>
+    </nav>
+  </header>
+
+  <!-- HEADER BOTTOM -->
+  <div class="header-bottom">
+    <div class="left-menu">
+      <a href="#">Home</a>
+      <a href="#">Ship</a>
+      <a href="#">Track</a>
+    </div>
+    <div class="right-menu">
+      <button><i class="fas fa-user-plus"></i> Register</button>
+      <button><i class="fas fa-sign-in-alt"></i> Login</button>
+    </div>
+  </div>
+
+  <section class="hero">
+    <div class="overlay">
+      <div class="hero-content">
+        <div class="left">
+          <h1>Welcome to <span>DHL Express</span></h1>
+          <p>Over 50 years of international shipping expertise</p>
+        </div>
+        <div class="right">
+          <h2>Get Started Now</h2>
+          <div class="buttons">
+            <button>Create a New Shipment</button>
+            <button>Get a Rate and Time Quote</button>
+            <button>Schedule a Pickup</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="custom-carousel">
+    <div class="carousel-wrapper">
+      <button class="carousel-btn left">&#10094;</button>
+      <div class="carousel-track">
+        <div class="carousel-item">
+          <img src="/assets/slide1.jpeg" alt="Slide 1">
+          <div class="carousel-text">
+            <h3>Fast Delivery</h3>
+            <p>Worldwide shipping in 24 hours</p>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img src="/assets/slide2.jpg" alt="Slide 2">
+          <div class="carousel-text">
+            <h3>Secure Packages</h3>
+            <p>We guarantee safe and secure packaging</p>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img src="/assets/slide3.jpg" alt="Slide 3">
+          <div class="carousel-text">
+            <h3>Track Your Parcel</h3>
+            <p>Live parcel tracking in our system</p>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img src="/assets/slide4.jpg" alt="Slide 4">
+          <div class="carousel-text">
+            <h3>24/7 Support</h3>
+            <p>Always ready to help you</p>
+          </div>
+        </div>
+      </div>
+      <button class="carousel-btn right">&#10095;</button>
+    </div>
+  </section>
+
+  <section class="mydhl-section">
+    <div class="mydhl-container">
+      <div class="mydhl-left">
+        <img src="/assets/dhlBack.png" alt="MyDHL Devices" />
+      </div>
+      <div class="mydhl-right">
+        <h2>Flexible, Powerful and Easy!</h2>
+        <p>MyDHL+ makes it easier than ever to ship online, get quotes, schedule pickups, find locations, track shipments and more!</p>
+        <div class="mydhl-actions">
+          <div class="mydhl-action">
+            <i class="fas fa-user"></i>
+            <a href="#">Create a Login</a>
+          </div>
+          <div class="mydhl-divider"></div>
+          <div class="mydhl-action">
+            <i class="fas fa-globe"></i>
+            <a href="#">About MyDHL+</a>
+          </div>
+          <div class="mydhl-divider"></div>
+          <div class="mydhl-action">
+            <i class="fas fa-check-circle"></i>
+            <a href="#">What's New</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN CONTENT -->
+  <main class="site-main">
+    <h1>Create New Shipment</h1>
+    <form id="shipmentForm">
+      <div class="form-group">
+        <label for="fromCountry">From Country</label>
+        <input type="text" id="fromCountry" placeholder="Azerbaijan" required />
+      </div>
+      <div class="form-group">
+        <label for="toCountry">To Country</label>
+        <input type="text" id="toCountry" placeholder="Germany" required />
+      </div>
+      <div class="form-group">
+        <label for="weight">Weight (kg)</label>
+        <input type="number" id="weight" step="0.1" min="0" placeholder="2.5" required />
+      </div>
+      <button type="submit">Continue</button>
+    </form>
+  </main>
+
+
+  <!-- FOOTER -->
+  <footer class="dhl-footer">
+    <div class="footer-top">
+      <div class="footer-column">
+        <h4>CONTACT AND SUPPORT</h4>
+        <a href="#">Help and Support</a>
+        <a href="#">FAQs</a>
+        <a href="#">Contact Us</a>
+        <a href="#">Find a location</a>
+      </div>
+      <div class="footer-column">
+        <h4>LEGAL</h4>
+        <a href="#">Terms and Conditions</a>
+        <a href="#">Privacy Notice</a>
+      </div>
+      <div class="footer-column">
+        <h4>ALERTS</h4>
+        <a href="#">Fraud Awareness</a>
+        <a href="#">Important Information</a>
+      </div>
+      <div class="footer-column footer-logo">
+        <img src="/assets/DHLlogo.png" alt="DHL Logo" />
+        <a href="#">About DHL</a>
+        <a href="#">Press</a>
+        <a href="#">Careers</a>
+        <a href="#">Legal Notice</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="follow">FOLLOW US</div>
+      <div class="legal-links">
+        <a href="#">Consent Settings</a>
+        <span>2025 © DHL Group - All rights reserved</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JAVASCRIPT -->
+  <script>
+    document.getElementById('shipmentForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      alert('Shipment creation continues...');
+    });
+
+    const track = document.querySelector('.carousel-track');
+    const items = document.querySelectorAll('.carousel-item');
+    const prevBtn = document.querySelector('.carousel-btn.left');
+    const nextBtn = document.querySelector('.carousel-btn.right');
+
+    let currentIndex = 0;
+
+    function updateCarousel() {
+      const width = items[0].getBoundingClientRect().width;
+      track.style.transform = `translateX(-${currentIndex * width}px)`;
+    }
+
+    nextBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % items.length;
+      updateCarousel();
+    });
+
+    prevBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex - 1 + items.length) % items.length;
+      updateCarousel();
+    });
+
+    window.addEventListener('resize', updateCarousel);
+    
+  </script>
+</body>
+</html>

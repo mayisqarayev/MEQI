@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DHL Register</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    :root {
+      --dhl-red: #ba0c2f;
+      --dhl-yellow: #ffe600;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .register-box {
+      background-color: white;
+      padding: 30px 25px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .register-box h1 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: var(--dhl-red);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .form-group i {
+      position: absolute;
+      top: 50%;
+      left: 10px;
+      transform: translateY(-50%);
+      color: #aaa;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 10px 10px 10px 35px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 15px;
+      box-sizing: border-box;
+      transition: box-shadow 0.3s ease;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      box-shadow: 0 0 5px 2px var(--dhl-red);
+      border-color: var(--dhl-red);
+    }
+
+    button {
+      width: 100%;
+      background-color: var(--dhl-red);
+      color: white;
+      border: none;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background-color: #990926;
+    }
+
+    input[disabled] {
+      background-color: #eee;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+  <div class="register-box">
+    <h1>Register</h1>
+    <form id="registerForm">
+      <div class="form-group">
+        <i class="fas fa-user"></i>
+        <input type="text" id="fullname" placeholder="Full Name" required />
+      </div>
+      <div class="form-group">
+        <i class="fas fa-user-circle"></i>
+        <input type="text" id="username" placeholder="Username" required />
+      </div>
+      <div class="form-group">
+        <i class="fas fa-lock"></i>
+        <input type="password" id="password" placeholder="Password" required />
+      </div>
+      <div class="form-group">
+        <i class="fas fa-lock"></i>
+        <input type="password" id="confirmPassword" placeholder="Confirm Password" required disabled />
+      </div>
+      <button type="submit">Register</button>
+    </form>
+  </div>
+
+  <script>
+    const passwordInput = document.getElementById("password");
+    const confirmInput = document.getElementById("confirmPassword");
+
+    passwordInput.addEventListener("input", () => {
+      if (passwordInput.value.trim().length > 0) {
+        confirmInput.disabled = false;
+      } else {
+        confirmInput.disabled = true;
+        confirmInput.value = "";
+      }
+    });
+
+    document.getElementById("registerForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const fullname = document.getElementById("fullname").value;
+      const username = document.getElementById("username").value;
+      const password = passwordInput.value;
+      const confirmPassword = confirmInput.value;
+
+      if (password !== confirmPassword) {
+        alert("Passwords do not match!");
+        return;
+      }
+
+
+      localStorage.setItem("registeredUsername", username);
+      localStorage.setItem("registeredPassword", password);
+
+      alert("Registration successful! You can now log in.");
+      window.location.href = "login.html";
+    });
+    
+  </script>
+</body>
+</html>

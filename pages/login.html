@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login | DHL Express</title>
+  <style>
+    :root {
+      --dhl-red: #ba0c2f;
+      --input-border: #ddd;
+      --input-focus-border: #ba0c2f;
+      --button-hover: #8a081f;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #f6f6f6;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .login-container {
+      max-width: 400px;
+      margin: 80px auto;
+      background-color: #fff;
+      padding: 40px 30px;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: var(--dhl-red);
+      font-size: 2rem;
+      margin-bottom: 30px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 12px 15px;
+      font-size: 1rem;
+      border: 1.8px solid var(--input-border);
+      border-radius: 6px;
+      box-sizing: border-box;
+      transition: border-color 0.3s ease;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: var(--input-focus-border);
+      box-shadow: 0 0 6px rgba(186, 12, 47, 0.4);
+    }
+
+    button[type="submit"] {
+      width: 100%;
+      background-color: var(--dhl-red);
+      color: white;
+      border: none;
+      padding: 14px 0;
+      font-size: 1.15rem;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button[type="submit"]:hover {
+      background-color: var(--button-hover);
+    }
+
+    .extra-links {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .extra-links a {
+      color: var(--dhl-red);
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    .extra-links a:hover {
+      text-decoration: underline;
+    }
+
+    .message {
+      text-align: center;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    .message.success {
+      color: green;
+    }
+
+    .message.error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-container">
+    <h1>DHL Login</h1>
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="text">Username</label>
+        <input type="text" id="email" placeholder="you@example.com" required />
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="••••••••" required />
+      </div>
+      <button type="submit">Login</button>
+    </form>
+    <div class="message" id="message"></div>
+    <div class="extra-links">
+      <p><a href="#">Forgot your password?</a></p>
+      <p><a href="#">Create a new account</a></p>
+    </div>
+  </div>
+
+  <script>
+
+    const loginForm = document.getElementById("loginForm");
+    loginForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const enteredUsername = document.getElementById("email").value;
+      const enteredPassword = document.getElementById("password").value;
+
+      const storedUsername = localStorage.getItem("registeredUsername");
+      const storedPassword = localStorage.getItem("registeredPassword");
+      console.log(storedUsername);
+      console.log(storedPassword);
+
+      if (enteredUsername === storedUsername && enteredPassword === storedPassword) {
+        alert("Login successful!");
+        window.location.href = "index.html";
+      } else {
+        alert("Incorrect username or password.");
+      }
+    });
+
+  </script>
+</body>
+</html>
